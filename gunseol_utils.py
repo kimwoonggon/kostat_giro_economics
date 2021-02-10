@@ -53,9 +53,10 @@ def process_data(post: dict, jsonResult: list):
     return jsonResult
 
 def filter_article(description: str, title: str):
-    for filter in Settings.FILTERS:
-        if filter in description or filter in title:
-            return None, None
+    if len(Settings.FILTERS) > 0:
+        for filter in Settings.FILTERS:
+            if filter in description or filter in title:
+                return None, None
     return description, title
 
 def crawl_data(user_search_list: list, user_name_list: list) -> pd.core.frame.DataFrame:
@@ -67,7 +68,7 @@ def crawl_data(user_search_list: list, user_name_list: list) -> pd.core.frame.Da
         jsonResult = []
         pre_search_text = Settings.PRE_SEARCH_TEXT
         real_search_text = search
-        search_text = real_search_text + ' ' + pre_search_text.replace("(주)", "")
+        search_text = real_search_text.replace("(주)","") + ' ' + pre_search_text
         jsonSearch = get_naver_json(kind = Settings.KIND,
                                     search_text = search_text,
                                     page_start = '1',
