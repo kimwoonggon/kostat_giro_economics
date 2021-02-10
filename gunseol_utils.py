@@ -67,7 +67,7 @@ def crawl_data(user_search_list: list, user_name_list: list) -> pd.core.frame.Da
         jsonResult = []
         pre_search_text = Settings.PRE_SEARCH_TEXT
         real_search_text = search
-        search_text = real_search_text + ' ' + pre_search_text
+        search_text = real_search_text + ' ' + pre_search_text.replace("(주)", "")
         jsonSearch = get_naver_json(kind = Settings.KIND,
                                     search_text = search_text,
                                     page_start = '1',
